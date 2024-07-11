@@ -1,8 +1,9 @@
+//adding the required packages
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown');
 
-
+//generating  prompts for the user to answer
 inquirer
   .prompt([
     {
