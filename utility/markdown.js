@@ -3,7 +3,7 @@ function generateMarkdown(data) {
   
 ${data.title}
 
-${renderLicenseBadge(data.license)}
+
 
 ## Description
 
@@ -11,46 +11,22 @@ ${data.description}
 
 
 
-## Table of Contents 
+## instructions 
+${data.instructions}
 
-* [Installation](#installation)
+## License
 
-* [Usage](#usage)
-
-* [Contributing](#contributing)
-
+${(data.license)}
 
 
+## Motivation 
+${data.motivation}
 
+## Who is this App for? 
 
+${data.who}
 
-## Installation 
-
-To install necessary dependencies, run the following command:
-
-\`\`\`
-${data.installation}
-\`\`\`
-
-## Usage 
-${data.usage}
-
-
-${renderLicenseSection(data.license)}
-
-
-## Contributing 
-${data.contributing}
-
-## Tests 
-To run tests, run the following command:
-
-\`\`\`
-${data.test}
-\`\`\`
-
-
-## Questions 
+## Contact Info 
 
 If you have any questions about the repo, open an issue or contact me directly at ${
     data.email
