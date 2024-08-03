@@ -1,85 +1,62 @@
 //adding the required packages
-const inquirer = require('inquirer');
-const fs = require('fs');
-const generateMarkdown = require('./utils/generateMarkdown');
 
-//generating  prompts for the user to answer
-inquirer
-  .prompt([
-    {
-      type: 'input',
-      message: 'What is your name?',
-      name: 'name',
-    },
-    {
-      type: 'input',
-      message: 'What is your project title?',
-      name: 'title',
-    },
-    {
-      type: 'input',
-      message: 'Project Description',
-      name: 'description',
-    },
-    {
-      type: 'input',
-      message: 'What was your motivation?',
-      name: 'motivation',
-    },
-    {
-      type: 'input',
-      message: 'credits?',
-      name: 'credits',
-    },{
-      type: 'input',
-      message: 'useage instructions?',
-      name: 'instructions',
-    },{
-      type: 'input',
-      message: 'who is it for?',
-      name: 'who',
-    },{
-      type: 'input',
-      message: 'GitHub username',
-      name: 'github',
-    },
-    {
-      type: 'input',
-      message: 'email address',
-      name: 'email',
-    },
-    {
-      type: 'input',
-      message: 'license used?',
-      name:license,
-    },
-  ])
-  //generating markdown
-  .then((data) => {
-    let markdown = generateMarkdown ({
-      title: `${data.title}`,
-      description: `${data.description}`,
-      instructions: `${data.instructions}`,
-      who: `${data.who}`,
-      motivation: `${data.motivation}`,
-      name: `${data.name}`,
-      license: `${data.license}`,
-      email: `${data.email}`,
-      github: `${data.github}`,
-    })
-    //writing the file
-    fs.writeFile('README.md', markdown, (err) => {
-        if (err) {
-            console.log(err); 
-        } else {
-            console.log('success');
-        }
-    })
+const inquirer = require("inquirer");
+const fs = require("fs");
+const generateMarkdown = require("./utils/generateMarkdown");
+
+// add questions to an array
+const questions = [
+  { type: "input", message: "what is your GitHub username?", name: "username" },
+  { type: "input", message: "What is your email address?", name: "email" },
+  { type: "input", message: "What is your project's name?", name: "title" },
+  {
+    type: "input",
+    message: "Write a short description of your project:",
+    name: "description",
+  },
+  {
+    type: "list",
+    message: "What type of license should you project have?",
+    name: "license",
+    choices: ["MIT", "APACHE 2.0", "GPL 3.0", "BSD 3", "none"],
+  },
+  {
+    type: "input",
+    message: "What command should be run to install dependencies?",
+    name: "dependencies",
+  },
+  {
+    type: "input",
+    message: "What command should be run to run tests?",
+    name: "tests",
+  },
+  {
+    type: "input",
+    message: "What does the user need to know about using the repo?",
+    name: "usage",
+  },
+  {
+    type: "input",
+    message: "What does the user need to know about contributing the repo?",
+    name: "contributing",
+  },
+];
+
+// writing file
+const writeToFile = (data) => {
+  fs.writeFile("generated-README.md", data, (err) => {
+    err ? console.error(err) : console.log("File created!");
   });
+};
 
+// initializing app
+function init() {
+  inquirer.prompt(questions).then((data) => {
+    // send the data to generateMarkdown to format it
+    let markdown = generateMarkdown(data);
+    writeToFile(markdown);
+  });
+}
 
-// intializing the app
-function init() {}
-
-// calling the initialization
+// Calling the app
 init();
