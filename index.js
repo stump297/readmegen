@@ -54,7 +54,7 @@ function init() {
   inquirer.prompt(questions).then((data) => {
     // send the data to generateMarkdown to format it
     let markdown = generateMarkdown(data);
-    fs.writeFile(markdown);
+    writeToFile(markdown);
   });
 }
 
